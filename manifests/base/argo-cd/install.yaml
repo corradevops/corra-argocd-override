@@ -23833,6 +23833,12 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - pods/exec
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
   - secrets
   - configmaps
   verbs:
@@ -23894,6 +23900,12 @@ metadata:
     app.kubernetes.io/part-of: argocd
   name: argocd-applicationset-controller
 rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
 - apiGroups:
   - argoproj.io
   resources:
@@ -24177,6 +24189,8 @@ subjects:
 ---
 apiVersion: v1
 kind: ConfigMap
+data:
+  exec.enabled: "true"
 metadata:
   labels:
     app.kubernetes.io/name: argocd-cm
@@ -24210,6 +24224,9 @@ metadata:
 ---
 apiVersion: v1
 kind: ConfigMap
+data:
+  policy.csv: |
+    p, role:myrole, exec, create, */*, allow
 metadata:
   labels:
     app.kubernetes.io/name: argocd-rbac-cm
